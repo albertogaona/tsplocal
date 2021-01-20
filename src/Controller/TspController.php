@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * @Route("/tsp")
+ * @Route("/")
  */
 class TspController extends AbstractController
 {
@@ -34,8 +34,10 @@ class TspController extends AbstractController
 
         $logger->error("ENTRA:::::::");
 
-        $date = $cn->executeQuery("SELECT UTC_TIMESTAMP() ")->fetchColumn();
+        //$date = $cn->executeQuery("SELECT UTC_TIMESTAMP() ")->fetchColumn();
 
+        $date = date('Y:m:d');
+        
         return $this->json([
             "code" => Response::HTTP_OK,
             "data" => [
