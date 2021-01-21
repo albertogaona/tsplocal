@@ -13,13 +13,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
- * @Route("/")
+ * @Route("/tsp")
  */
 class TspController extends AbstractController
 {
 
+
     /**
-     * @Route("/{id}")
+     * @Route("/getInfo", name="tsp_getInfo")
      * @param Request $request
      * @param string $id
      * @param EntityManagerInterface $entityManager
@@ -37,7 +38,7 @@ class TspController extends AbstractController
         //$date = $cn->executeQuery("SELECT UTC_TIMESTAMP() ")->fetchColumn();
 
         $date = date('Y:m:d');
-        
+
         return $this->json([
             "code" => Response::HTTP_OK,
             "data" => [
