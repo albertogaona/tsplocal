@@ -37,8 +37,8 @@ class TspController extends AbstractController
 
         $logger->error("ENTRA:::::::");
 
-        $date = $cn->executeQuery("SELECT UTC_TIMESTAMP() ")->fetch();
-        $pines = $cn->executeQuery("SELECT * FROM pines")->fetchAll();
+        $date = $cn->executeQuery("SELECT UTC_TIMESTAMP() ")->fetchOne();
+        $pines = $cn->executeQuery("SELECT * FROM pines")->fetchAllAssociative();
 
         //$date = gmdate('Y:m:d H:i:s');
 
