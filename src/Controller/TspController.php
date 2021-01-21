@@ -40,8 +40,8 @@ class TspController extends AbstractController
 
         $date = gmdate('Y:m:d H:i:s');
 
-        $freeSpace = self::freeSpaceHumanReadable(disk_free_space("/"));
-        $totalSpace = self::freeSpaceHumanReadable(disk_total_space("/"));
+        //$freeSpace = self::freeSpaceHumanReadable(disk_free_space("/"));
+        //$totalSpace = self::freeSpaceHumanReadable(disk_total_space("/"));
 
         return $this->json([
             "code" => Response::HTTP_OK,
@@ -50,8 +50,8 @@ class TspController extends AbstractController
                 "date" => $date,
                 "pines" => [],
                "hardware" => [
-                   "free_space" => $freeSpace,
-                   "total_space" => $totalSpace,
+                   //"free_space" => $freeSpace,
+                   //"total_space" => $totalSpace,
                ]
             ],
             "error" => false
