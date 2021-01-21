@@ -28,7 +28,7 @@ class TspController extends AbstractController
      * @return JsonResponse
      * @throws Exception
      */
-    public function index(Request $request, $id = "-1",
+    public function index(Request $request,
                           EntityManagerInterface $entityManager,
                           LoggerInterface $logger)
     {
@@ -38,7 +38,7 @@ class TspController extends AbstractController
         $logger->error("ENTRA:::::::");
 
         $date = $cn->executeQuery("SELECT UTC_TIMESTAMP() ")->fetchOne();
-        $accountNumber = $cn->executeQuery("SELECT account_number, armed_state FROM site_status ")
+        $accountNumber = $cn->executeQuery("SELECT account_number, armed_state FROM site_status LIMIT 1")
             ->fetchAllAssociative();
         $pines = $cn->executeQuery("SELECT * FROM pines")->fetchAllAssociative();
 
@@ -50,7 +50,6 @@ class TspController extends AbstractController
         return $this->json([
             "code" => Response::HTTP_OK,
             "data" => [
-                "id" => $id,
                 "date" => $date,
                 "pines" => $pines,
                 "site" => $accountNumber,
@@ -63,6 +62,48 @@ class TspController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/getInfo/{pin}", name="tsp_getInfo")
+     * @param Request $request
+     * @param string $id
+     * @param EntityManagerInterface $entityManager
+     * @param LoggerInterface $logger
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function getInfoByPin(Request $request, $pin = "-1",
+                          EntityManagerInterface $entityManager,
+                          LoggerInterface $logger)
+    {
+
+        $cn = $entityManager->getConnection();
+
+        $logger->error("ENTRA:::::::");
+
+        $date = $cn->executeQuery("SELECT UTC_TIMESTAMP() ")->fetchOne();
+        $accountNumber = $cn->executeQuery("SELECT account_number, armed_state FROM site_status LIMIT 1")
+            ->fetchAllAssociative();
+        $pines = $cn->executeQuery("SELECT * FROM pines WHERE :pin ", ["pin" => $pin])->fetchAllAssociative();
+
+        //$date = gmdate('Y:m:d H:i:s');
+
+        $freeSpace = self::freeSpaceHumanReadable(disk_free_space("/"));
+        $totalSpace = self::freeSpaceHumanReadable(disk_total_space("/"));
+
+        return $this->json([
+            "code" => Response::HTTP_OK,
+            "data" => [
+                "date" => $date,
+                "pines" => $pines,
+                "site" => $accountNumber,
+                "hardware" => [
+                    "free_space" => $freeSpace,
+                    "total_space" => $totalSpace,
+                ]
+            ],
+            "error" => false
+        ]);
+    }
     private function freeSpaceHumanReadable($space)
     {
         $si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
