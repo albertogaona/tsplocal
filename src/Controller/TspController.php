@@ -63,7 +63,7 @@ class TspController extends AbstractController
     }
 
     /**
-     * @Route("/getInfo/{pin}", name="tsp_getInfo")
+     * @Route("/getInfo/{pin}", name="tsp_getInfo_pin")
      * @param Request $request
      * @param string $id
      * @param EntityManagerInterface $entityManager
