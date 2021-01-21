@@ -28,27 +28,29 @@ class TspController extends AbstractController
      * @return JsonResponse
      * @throws Exception
      */
-    public function index(Request $request, $id = "-1", EntityManagerInterface $entityManager, LoggerInterface $logger)
+    public function index(Request $request, $id = "-1",
+                          EntityManagerInterface $entityManager,
+                          LoggerInterface $logger)
     {
 
         $cn = $entityManager->getConnection();
 
         $logger->error("ENTRA:::::::");
 
-        //$date = $cn->executeQuery("SELECT UTC_TIMESTAMP() ")->fetchColumn();
-        //$pines = $cn->executeQuery("SELECT * FROM pines")->fetchAll();
+        $date = $cn->executeQuery("SELECT UTC_TIMESTAMP() ")->fetchOne();
+        $pines = $cn->executeQuery("SELECT * FROM pines")->fetchAllAssociative();
 
-        $date = gmdate('Y:m:d H:i:s');
+        //$date = gmdate('Y:m:d H:i:s');
 
-        //$freeSpace = self::freeSpaceHumanReadable(disk_free_space("/"));
-        //$totalSpace = self::freeSpaceHumanReadable(disk_total_space("/"));
+        $freeSpace = self::freeSpaceHumanReadable(disk_free_space("/"));
+        $totalSpace = self::freeSpaceHumanReadable(disk_total_space("/"));
 
         return $this->json([
             "code" => Response::HTTP_OK,
             "data" => [
                 "id" => $id,
                 "date" => $date,
-                "pines" => [],
+                "pines" => $pines,
                "hardware" => [
                    //"free_space" => $freeSpace,
                    //"total_space" => $totalSpace,
