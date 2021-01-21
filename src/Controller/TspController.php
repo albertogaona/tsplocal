@@ -36,16 +36,33 @@ class TspController extends AbstractController
         $logger->error("ENTRA:::::::");
 
         //$date = $cn->executeQuery("SELECT UTC_TIMESTAMP() ")->fetchColumn();
+        //$pines = $cn->executeQuery("SELECT * FROM pines")->fetchAll();
 
-        $date = date('Y:m:d');
+        $date = gmdate('Y:m:d H:i:s');
+
+        $freeSpace = self::freeSpaceHumanReadable(disk_free_space("/"));
+        $totalSpace = self::freeSpaceHumanReadable(disk_total_space("/"));
 
         return $this->json([
             "code" => Response::HTTP_OK,
             "data" => [
                 "id" => $id,
                 "date" => $date,
+                "pines" => [],
+               "hardware" => [
+                   "free_space" => $freeSpace,
+                   "total_space" => $totalSpace,
+               ]
             ],
             "error" => false
         ]);
+    }
+
+    private function freeSpaceHumanReadable($space)
+    {
+        $si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
+        $base = 1024;
+        $class = min((int)log($space , $base) , count($si_prefix) - 1);
+        return sprintf('%1.2f' , $space / pow($base, $class)) . ' ' . $si_prefix[$class];
     }
 }
