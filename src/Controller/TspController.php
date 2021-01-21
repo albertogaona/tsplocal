@@ -52,8 +52,8 @@ class TspController extends AbstractController
                 "date" => $date,
                 "pines" => $pines,
                "hardware" => [
-                   //"free_space" => $freeSpace,
-                   //"total_space" => $totalSpace,
+                   "free_space" => $freeSpace,
+                   "total_space" => $totalSpace,
                ]
             ],
             "error" => false
