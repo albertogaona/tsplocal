@@ -38,13 +38,9 @@ class TspController extends AbstractController
         $logger->error("ENTRA:::::::");
 
         $date = $cn->executeQuery("SELECT UTC_TIMESTAMP() ")->fetchOne();
-        /*
-
         $accountNumber = $cn->executeQuery("SELECT account_number, armed_state FROM site_status LIMIT 1")
             ->fetchAllAssociative();
         $pines = $cn->executeQuery("SELECT * FROM pines")->fetchAllAssociative();
-
-        */
 
         //$date = gmdate('Y:m:d H:i:s');
 
@@ -55,10 +51,8 @@ class TspController extends AbstractController
             "code" => Response::HTTP_OK,
             "data" => [
                 "date" => $date,
-                //"pines" => $pines,
-                "pines" => [],
-                //"site" => $accountNumber,
-                "site" => 0000,
+                "pines" => $pines,
+                "site" => $accountNumber,
                 "hardware" => [
                     "free_space" => $freeSpace,
                     "total_space" => $totalSpace,
