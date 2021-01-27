@@ -95,7 +95,8 @@ class TspController extends AbstractController
             "data" => [
                 "date" => $date,
                 "pines" => $pines,
-                "site" => $accountNumber,
+                "site" => count($accountNumber)>0 ? $accountNumber[0]
+                    : array("account_number" => null, "armed_state" => null),
                 "hardware" => [
                     "free_space" => $freeSpace,
                     "total_space" => $totalSpace,
