@@ -90,7 +90,10 @@ class TspController extends AbstractController
         $freeSpace = self::freeSpaceHumanReadable(disk_free_space("/"));
         $totalSpace = self::freeSpaceHumanReadable(disk_total_space("/"));
 
-        return $this->json([
+        var_dump($accountNumber);
+        var_dump($accountNumber[0]);
+
+        $retArr = [
             "code" => Response::HTTP_OK,
             "data" => [
                 "date" => $date,
@@ -103,7 +106,15 @@ class TspController extends AbstractController
                 ]
             ],
             "error" => false
-        ]);
+        ];
+
+        var_dump($retArr);
+
+        $retJson = $this->json($retArr);
+
+        var_dump($retJson);
+
+        return $retJson;
     }
     private function freeSpaceHumanReadable($space)
     {
