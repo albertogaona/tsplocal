@@ -47,7 +47,7 @@ class TspController extends AbstractController
         $freeSpace = self::freeSpaceHumanReadable(disk_free_space("/"));
         $totalSpace = self::freeSpaceHumanReadable(disk_total_space("/"));
 
-        $logger->error( shell_exec('/home/pi/move_mouse_away.sh') );
+        //$logger->error( shell_exec('/home/pi/move_mouse_away.sh') );
 
         return $this->json([
             "code" => Response::HTTP_OK,
