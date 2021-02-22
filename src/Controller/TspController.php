@@ -47,12 +47,7 @@ class TspController extends AbstractController
         $freeSpace = self::freeSpaceHumanReadable(disk_free_space("/"));
         $totalSpace = self::freeSpaceHumanReadable(disk_total_space("/"));
 
-        shell_exec('
-        export DISPLAY=":0"
-        WID=$(xdotool search --onlyvisible --class chromium|head -1)
-        /usr/bin/xdotool windowactivate ${WID}
-        /usr/bin/xdotool click 1 mousemove_relative 0 100'
-        );
+        shell_exec('/home/pi/move_mouse_away.sh');
 
         return $this->json([
             "code" => Response::HTTP_OK,
