@@ -105,6 +105,26 @@ class TspController extends AbstractController
             "error" => false
         ]);
     }
+
+    /**
+     * @Route("/resetUSB", name="tsp_reset_usb")
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param LoggerInterface $logger
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function resetUSB(Request $request, EntityManagerInterface $entityManager, LoggerInterface $logger)
+    {
+        $usb_port_numbers = array(1,2,3,4);
+        foreach ($usb_port_numbers as $index){
+            $logger->debug( "USB DOWN $index: ". shell_exec("sudo /usr/sbin/uhubctl -a 0 -l $index") );
+            $logger->debug( "USB UP $index: ". shell_exec("sudo /usr/sbin/uhubctl -a 1 -l $index") );
+        }
+
+        return $this->json(["code" => Response::HTTP_OK]);
+    }
+
     private function freeSpaceHumanReadable($space)
     {
         $si_prefix = array( 'B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB' );
