@@ -119,6 +119,7 @@ class TspController extends AbstractController
         $usb_port_numbers = array(1,2,3,4);
         foreach ($usb_port_numbers as $index){
             $logger->debug( "USB DOWN $index: ". shell_exec("sudo /usr/sbin/uhubctl -a 0 -l $index") );
+            sleep(1);
             $logger->debug( "USB UP $index: ". shell_exec("sudo /usr/sbin/uhubctl -a 1 -l $index") );
         }
 
